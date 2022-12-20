@@ -1,22 +1,11 @@
-import express, { Application, Request, Response, NextFunction } from 'express'
-const { getRating } = require('./index')
+import express from 'express';
+import apiRoutes from './api/routes';
 
-const app: Application = express()
-const port: number = 3000
+const app = express();
+const port = 3000;
 
-const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    res.locals.rating = await getRating(req.query.code)
-    next()
-}
-
-app.use(authMiddleware)
-
-app.get('/auth', (req: Request, res: Response) => {
-    res.send('The user has given the specified video the following rating: ' + res.locals.rating)
-    console.log('The user has given the specified video the following rating: ' + res.locals.rating)
-    process.exit(0)
-});
+app.use('/api', apiRoutes);
 
 app.listen(port, () => {
-    console.log(`Started litening on port ${port}`)
-})
+  console.log(`Server listening at http://localhost:${port}`);
+});

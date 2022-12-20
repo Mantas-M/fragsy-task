@@ -28,6 +28,7 @@ const youtubeUrlParser = (url) => {
 const youtubeVideoId = youtubeUrlParser(process.env.YOUTUBE_URL);
 const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUrl);
 const url = oauth2Client.generateAuthUrl({
+    response_type: 'code',
     access_type: 'offline',
     scope: 'https://www.googleapis.com/auth/youtube.force-ssl',
     prompt: 'consent',
